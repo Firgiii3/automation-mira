@@ -14,7 +14,7 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
   },
   reporter: [
-    ["html", { open: "never" }],  // ← ubah "always" → "never"
-    ["list"],                      // ← tambahkan ini, biar ada output di terminal CI
+    ["html", { open: "always" }],
+    ["list"],
   ],
 });

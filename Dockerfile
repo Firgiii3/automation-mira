@@ -7,4 +7,4 @@ RUN npm ci
 
 COPY . .
 
-CMD ["npx", "playwright", "test"]
+CMD ["sh", "-c", "npx playwright test ${TEST_FILE} --grep ${TEST_NAME}"]

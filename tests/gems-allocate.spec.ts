@@ -8,10 +8,11 @@ const GEMS_AMOUNT = "100";
 async function goToGemsAllocation(page: any) {
   await expect(page.getByText("Miracall Admin Dashboard")).toBeVisible({ timeout: 15000 });
 
-  await page.getByRole("link", { name: "Admin" }).click();
+  // samakan dengan pola yang sudah benar di admin-content-approval.spec.ts
+  await page.getByRole("button", { name: "Admin" }).click();
   await page.waitForTimeout(1000);
 
-  await page.goto("/admin-management/add-gems");
+  await page.getByRole("link", { name: "Gems Allocation" }).click();
   await page.waitForLoadState("domcontentloaded");
 
   await expect(page).toHaveURL(/admin-management\/add-gems/, { timeout: 10000 });

@@ -16,6 +16,9 @@ services:
     build: .
     environment:
       - BASE_URL=${BASE_URL}
+        - TEST_FILE=tests/admin-content-approval.spec.ts
+        - TEST_NAME=TC-Admin-02 
     volumes:
       - ./playwright-report:/app/playwright-report
       - ./test-results:/app/test-results
+
