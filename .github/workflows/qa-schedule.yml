@@ -1,0 +1,28 @@
+name: QA Automation - Daily 12 WIB
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+jobs:
+  qa-tests:
+    runs-on: self-hosted   # ← ubah dari ubuntu-latest ke self-hosted
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run tests via Docker
+        run: docker compose up --build --abort-on-container-exit playwright
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-${{ github.run_number }}
+          path: playwright-report/
+          retention-days: 30

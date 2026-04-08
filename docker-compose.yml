@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  github-runner:
+    build:
+      context: .
+      dockerfile: runner/Dockerfile
+    environment:
+      - RUNNER_TOKEN=token_dari_github_kamu
+      - BASE_URL=https://urlwebsite-kamu.com
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+  playwright:
+    build: .
+    environment:
+      - BASE_URL=${BASE_URL}
+    volumes:
+      - ./playwright-report:/app/playwright-report
+      - ./test-results:/app/test-results
