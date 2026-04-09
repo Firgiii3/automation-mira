@@ -1,7 +1,7 @@
 import { test, expect } from "./fixtures";
 
 const PAGE_VIEW_DELAY = 5000;
-const SEARCH_EMAIL = "mahesa@ultrazbola.com";
+const SEARCH_EMAIL = "miftah@ultrazbola.com";
 const GEMS_AMOUNT = "100";
 
 
@@ -21,7 +21,7 @@ async function goToGemsAllocation(page: any) {
 }
 
 //TC-Admin-03: Gems Allocation → Search User → Allocate Gems 
-test("TC-Admin-03: Gems Allocation → Search User → Allocate Gems", async ({ loggedInPage: page, ss }) => {
+test("TC-Admin-01: Gems Allocation → Search User → Allocate Gems", async ({ loggedInPage: page, ss }) => {
   await goToGemsAllocation(page);
 
   // search user

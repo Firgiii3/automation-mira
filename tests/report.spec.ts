@@ -197,7 +197,7 @@ test("TC-ChatHistory-07: Reports → Chat History → Locked → Today", async (
   await ss("TC-ChatHistory-07_locked-today-PASSED");
 });
 
-// ─── TC-ChatHistory-08: Status = Locked, Date Range = This Week ──────────────
+// ─── TC-ChatHistory-08
 test("TC-ChatHistory-08: Reports → Chat History → Locked → This Week", async ({ loggedInPage: page, ss }) => {
   await goToChatHistory(page);
   await setDateRange(page, "Active", "Locked");
@@ -208,7 +208,7 @@ test("TC-ChatHistory-08: Reports → Chat History → Locked → This Week", asy
   await ss("TC-ChatHistory-08_locked-this-week-PASSED");
 });
 
-// ─── TC-ChatHistory-09: Status = Locked, Date Range = This Month ─────────────
+// ─── TC-ChatHistory-09
 test("TC-ChatHistory-09: Reports → Chat History → Locked → This Month", async ({ loggedInPage: page, ss }) => {
   await goToChatHistory(page);
   await setDateRange(page, "Active", "Locked");
@@ -219,7 +219,7 @@ test("TC-ChatHistory-09: Reports → Chat History → Locked → This Month", as
   await ss("TC-ChatHistory-09_locked-this-month-PASSED");
 });
 
-// ─── TC-ChatHistory-10: Status = Locked, Semua Date Range ────────────────────
+// ─── TC-ChatHistory-10
 test("TC-ChatHistory-10: Reports → Chat History → Locked → Semua Date Range", async ({ loggedInPage: page, ss }) => {
   await goToChatHistory(page);
   await setDateRange(page, "Active", "Locked");
@@ -240,7 +240,7 @@ test("TC-ChatHistory-10: Reports → Chat History → Locked → Semua Date Rang
   await ss("TC-ChatHistory-10_locked-semua-date-PASSED");
 });
 
-// ─── TC-CallHistory-07: Semua Date Range ─────────────────────────────────────
+// ─── TC-CallHistory-07: 
 test("TC-CallHistory-07: Reports → Call History → Semua Date Range", async ({ loggedInPage: page, ss }) => {
   await goToCallHistory(page);
 
@@ -264,7 +264,6 @@ test("TC-CallHistory-07: Reports → Call History → Semua Date Range", async (
 
 // GIFT HISTORY — /reports/gift-history
 
-// ─── Helper: navigasi ke Reports → Gift History ───────────────────────────────
 async function goToGiftHistory(page: any) {
   await expect(page.getByText("Miracall Admin Dashboard")).toBeVisible({ timeout: 15000 });
 
@@ -285,7 +284,7 @@ test("TC-GiftHistory-01: Reports → Gift History → All Time", async ({ logged
   await ss("TC-GiftHistory-01_all-time-PASSED");
 });
 
-// ─── TC-GiftHistory-02: Date Range = Today ───────────────────────────────────
+// ─── TC-GiftHistory-02: Date Range = Today 
 test("TC-GiftHistory-02: Reports → Gift History → Today", async ({ loggedInPage: page, ss }) => {
   await goToGiftHistory(page);
   await setDateRange(page, "All Time", "Today");
@@ -294,7 +293,7 @@ test("TC-GiftHistory-02: Reports → Gift History → Today", async ({ loggedInP
   await ss("TC-GiftHistory-02_today-PASSED");
 });
 
-// ─── TC-GiftHistory-03: Date Range = This Week ───────────────────────────────
+// ─── TC-GiftHistory-03: Date Range = This Week 
 test("TC-GiftHistory-03: Reports → Gift History → This Week", async ({ loggedInPage: page, ss }) => {
   await goToGiftHistory(page);
   await setDateRange(page, "All Time", "This Week");
@@ -303,7 +302,7 @@ test("TC-GiftHistory-03: Reports → Gift History → This Week", async ({ logge
   await ss("TC-GiftHistory-03_this-week-PASSED");
 });
 
-// ─── TC-GiftHistory-04: Date Range = This Month ──────────────────────────────
+// ─── TC-GiftHistory-04: Date Range = This Month 
 test("TC-GiftHistory-04: Reports → Gift History → This Month", async ({ loggedInPage: page, ss }) => {
   await goToGiftHistory(page);
   await setDateRange(page, "All Time", "This Month");
@@ -312,7 +311,7 @@ test("TC-GiftHistory-04: Reports → Gift History → This Month", async ({ logg
   await ss("TC-GiftHistory-04_this-month-PASSED");
 });
 
-// ─── TC-GiftHistory-05: Semua Date Range ─────────────────────────────────────
+// ─── TC-GiftHistory-05: Semua Date Range 
 test("TC-GiftHistory-05: Reports → Gift History → Semua Date Range", async ({ loggedInPage: page, ss }) => {
   await goToGiftHistory(page);
 
@@ -372,7 +371,7 @@ async function setTalentPickDate(page: any, startDay: string, endDay: string) {
   await page.waitForTimeout(1000);
 }
 
-// ─── TC-TalentOnline-01: Search by email ─────────────────────────────────────
+// ─── TC-TalentOnline-01: Search by email
 test("TC-TalentOnline-01: Reports → Talent Online History → Search", async ({ loggedInPage: page, ss }) => {
   await goToTalentOnlineHistory(page);
   await searchTalent(page, TALENT_SEARCH_EMAIL);
@@ -390,7 +389,7 @@ test("TC-TalentOnline-02: Reports → Talent Online History → Pick Date", asyn
   await ss("TC-TalentOnline-02_pick-date-PASSED");
 });
 
-// ─── Helper: set Select date range dropdown ───────────────────────────────────
+// ─── Helper: set Select date range dropdown 
 async function setTalentDateRange(page: any, currentLabel: string, range: string) {
   await page.getByText(currentLabel, { exact: true }).click();
   await page.getByRole("option", { name: range, exact: true }).click();
@@ -398,7 +397,7 @@ async function setTalentDateRange(page: any, currentLabel: string, range: string
   await page.waitForTimeout(1000);
 }
 
-// ─── TC-TalentOnline-03: Select date range = All ──────────────────────────────
+// ─── TC-TalentOnline-03: Select date range = All 
 test("TC-TalentOnline-03: Reports → Talent Online History → All", async ({ loggedInPage: page, ss }) => {
   await goToTalentOnlineHistory(page);
   await setTalentDateRange(page, "All", "All");
@@ -407,7 +406,7 @@ test("TC-TalentOnline-03: Reports → Talent Online History → All", async ({ l
   await ss("TC-TalentOnline-03_all-PASSED");
 });
 
-// ─── TC-TalentOnline-04: Select date range = Today ───────────────────────────
+// ─── TC-TalentOnline-04: Select date range = Today 
 test("TC-TalentOnline-04: Reports → Talent Online History → Today", async ({ loggedInPage: page, ss }) => {
   await goToTalentOnlineHistory(page);
   await setTalentDateRange(page, "All", "Today");
@@ -416,7 +415,7 @@ test("TC-TalentOnline-04: Reports → Talent Online History → Today", async ({
   await ss("TC-TalentOnline-04_today-PASSED");
 });
 
-// ─── TC-TalentOnline-05: Select date range = Yesterday ───────────────────────
+// ─── TC-TalentOnline-05: Select date range = Yesterday 
 test("TC-TalentOnline-05: Reports → Talent Online History → Yesterday", async ({ loggedInPage: page, ss }) => {
   await goToTalentOnlineHistory(page);
   await setTalentDateRange(page, "All", "Yesterday");
@@ -425,34 +424,34 @@ test("TC-TalentOnline-05: Reports → Talent Online History → Yesterday", asyn
   await ss("TC-TalentOnline-05_yesterday-PASSED");
 });
 
-// ─── TC-TalentOnline-06: Select date range = 7D ──────────────────────────────
+// ─── TC-TalentOnline-06: Select date range = 7D
 test("TC-TalentOnline-06: Reports → Talent Online History → 7D", async ({ loggedInPage: page, ss }) => {
   await goToTalentOnlineHistory(page);
-  await setTalentDateRange(page, "All", "7D");
+  await setTalentDateRange(page, "All", "Last 7 days");
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 
   await ss("TC-TalentOnline-06_7d-PASSED");
 });
 
-// ─── TC-TalentOnline-07: Select date range = 30D ─────────────────────────────
+// ─── TC-TalentOnline-07: Select date range = 30D 
 test("TC-TalentOnline-07: Reports → Talent Online History → 30D", async ({ loggedInPage: page, ss }) => {
   await goToTalentOnlineHistory(page);
-  await setTalentDateRange(page, "All", "30D");
+  await setTalentDateRange(page, "All", "Last 30 days");
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 
   await ss("TC-TalentOnline-07_30d-PASSED");
 });
 
-// ─── TC-TalentOnline-08: Select date range = 90D ─────────────────────────────
+// ─── TC-TalentOnline-08: Select date range = 90D 
 test("TC-TalentOnline-08: Reports → Talent Online History → 90D", async ({ loggedInPage: page, ss }) => {
   await goToTalentOnlineHistory(page);
-  await setTalentDateRange(page, "All", "90D");
+  await setTalentDateRange(page, "All", "Last 90 days");
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 
   await ss("TC-TalentOnline-08_90d-PASSED");
 });
 
-// ─── TC-TalentOnline-09: Semua Select date range ─────────────────────────────
+// ─── TC-TalentOnline-09: Semua Select date range 
 test("TC-TalentOnline-09: Reports → Talent Online History → Semua Date Range", async ({ loggedInPage: page, ss }) => {
   await goToTalentOnlineHistory(page);
 

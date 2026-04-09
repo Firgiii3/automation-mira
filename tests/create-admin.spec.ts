@@ -3,21 +3,21 @@ import { test, expect } from "./fixtures";
 const PAGE_VIEW_DELAY = 3000;
 
 // data test untuk create admin
-const ADMIN_EMAIL    = "testadmin12@gmail.com";
+const ADMIN_EMAIL    = "testadmin123@gmail.com";
 const ADMIN_PASSWORD = "123456789";
-const ADMIN_FULLNAME = "admin broken";
+const ADMIN_FULLNAME = "admin brokenss";
 const ADMIN_ROLE     = "Admin";
 
 // ─── Helper: login → Admin → List Admin ──────────────────────────────────────
 async function goToListAdmin(page: any) {
   await expect(page.getByText("Miracall Admin Dashboard")).toBeVisible({ timeout: 15000 });
 
-  // klik Admin (toggle accordion)
-  await page.getByRole("link", { name: "Admin" }).click();
+  // samakan pola dengan spec admin lain: Admin = button, submenu = link
+  await page.getByRole("button", { name: "Admin" }).click();
   await page.waitForTimeout(1000);
 
-  // navigate ke list admin
-  await page.goto("/admin-management/list-admin");
+  // klik submenu List Admin
+  await page.getByRole("link", { name: "List Admin" }).click();
   await page.waitForLoadState("domcontentloaded");
 
   // verifikasi halaman list admin
@@ -28,7 +28,7 @@ async function goToListAdmin(page: any) {
 }
 
 // ─── TC-Admin-04: Create Admin ───────────────────────────────────────────────
-test("TC-Admin-04: Admin → List Admin → Create Admin", async ({ loggedInPage: page, ss }) => {
+test("TC-Admin-01 : Admin → List Admin → Create Admin", async ({ loggedInPage: page, ss }) => {
   await goToListAdmin(page);
 
   // ss halaman list admin sebelum create
@@ -89,7 +89,7 @@ test("TC-Admin-04: Admin → List Admin → Create Admin", async ({ loggedInPage
 });
 
 // ─── TC-Admin-04b: Create Admin Password < 8 Karakter ────────────────────────
-test("TC-Admin-04b: Create Admin Password Kurang Dari 8 Karakter", async ({ loggedInPage: page, ss }) => {
+test("TC-Admin-02: Create Admin Password Kurang Dari 8 Karakter", async ({ loggedInPage: page, ss }) => {
   await goToListAdmin(page);
 
   // langsung navigate ke form create
@@ -119,7 +119,7 @@ test("TC-Admin-04b: Create Admin Password Kurang Dari 8 Karakter", async ({ logg
 });
 
 // ─── TC-Admin-05: Edit Admin → Ganti Email, Full Name & Password ─────────────
-test("TC-Admin-05: Admin → List Admin → Edit Admin → Ganti Email, Full Name & Password", async ({ loggedInPage: page, ss }) => {
+test("TC-Admin-03: Admin → List Admin → Edit Admin → Ganti Email, Full Name & Password", async ({ loggedInPage: page, ss }) => {
   await goToListAdmin(page);
 
   // ss halaman list admin sebelum edit
@@ -138,11 +138,11 @@ test("TC-Admin-05: Admin → List Admin → Edit Admin → Ganti Email, Full Nam
 
   // ganti Email
   await page.getByRole("textbox", { name: "Email" }).click({ clickCount: 3 });
-  await page.getByRole("textbox", { name: "Email" }).fill("testadmin123@gmail.com");
+  await page.getByRole("textbox", { name: "Email" }).fill("admintest@gmail.com");
 
   // ganti Full name
   await page.getByRole("textbox", { name: "Full name" }).click({ clickCount: 3 });
-  await page.getByRole("textbox", { name: "Full name" }).fill("admins brokens");
+  await page.getByRole("textbox", { name: "Full name" }).fill("admins brokensss");
 
   // isi password baru
   await page.getByPlaceholder("New password (leave blank to keep current)").fill("admin12345");

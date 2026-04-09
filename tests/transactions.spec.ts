@@ -16,7 +16,7 @@ async function goToOrderHistory(page: any) {
 
   // verifikasi halaman order history
   await expect(page).toHaveURL(/transactions\/order-history/, { timeout: 10000 });
-  await expect(page.getByRole("heading", { name: "Order History" })).toBeVisible({ timeout: 10000 });
+  await expect(page.getByRole("heading", { name: "Order History", level: 1 })).toBeVisible({ timeout: 10000 });
   // verifikasi filter combobox muncul (bukti halaman sudah render, meski data kosong)
   await expect(page.getByRole("combobox").first()).toBeVisible({ timeout: 10000 });
   await page.waitForTimeout(PAGE_VIEW_DELAY);
@@ -46,7 +46,7 @@ async function setDateRangeOnly(page: any, range: string) {
   await page.waitForTimeout(1000);
 }
 
-// ─── TC-Transaction-01: Status=Success, Date Range=Today ─────────────────────
+// ─── TC-Transaction-01: Status=Success, Date Range=Today 
 test("TC-Transaction-01: Transactions → Order History → Success → Today", async ({ loggedInPage: page, ss }) => {
   await goToOrderHistory(page);
   await setStatus(page, "Success");
@@ -354,7 +354,7 @@ test("TC-Gifts-02: Transactions → Gifts Purchased History → Today", async ({
   await ss("TC-Gifts-02_today-PASSED");
 });
 
-// ─── TC-Gifts-03: Date Range=This Week ───────────────────────────────────────
+// ─── TC-Gifts-03: Date Range=This Week 
 test("TC-Gifts-03: Transactions → Gifts Purchased History → This Week", async ({ loggedInPage: page, ss }) => {
   await goToGiftsPurchasedHistory(page);
   await setDateRangeOnly(page, "This Week");
@@ -363,7 +363,7 @@ test("TC-Gifts-03: Transactions → Gifts Purchased History → This Week", asyn
   await ss("TC-Gifts-03_this-week-PASSED");
 });
 
-// ─── TC-Gifts-04: Date Range=This Month ──────────────────────────────────────
+// ─── TC-Gifts-04: Date Range=This Month 
 test("TC-Gifts-04: Transactions → Gifts Purchased History → This Month", async ({ loggedInPage: page, ss }) => {
   await goToGiftsPurchasedHistory(page);
   await setDateRangeOnly(page, "This Month");

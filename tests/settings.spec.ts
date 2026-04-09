@@ -46,7 +46,7 @@ async function goToGeneralConfig(page: any) {
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 }
 
-// ─── TC-Settings-01: Buka General Config → SS halaman ────────────────────────
+// ─── TC-Settings-01: Buka General Config → SS halaman 
 test("TC-Settings-01: Settings → General Config", async ({ loggedInPage: page, ss }) => {
   await goToGeneralConfig(page);
 
@@ -116,26 +116,34 @@ async function goToTalentsConfig(page: any) {
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 }
 
-// ─── TC-Settings-03: Buka Talents Config → SS halaman ────────────────────────
+// ─── Helper: scope section Talents Config agar locator tidak bentrok antar Reguler/VIP/Celeb ─
+function talentConfigSection(page: any, sectionTitle: string) {
+  return page.locator("section, div").filter({
+    has: page.getByText(sectionTitle, { exact: true }),
+  }).first();
+}
+
+// ─── TC-Settings-03: Buka Talents Config → SS halaman 
 test("TC-Settings-03: Settings → Talents Config", async ({ loggedInPage: page, ss }) => {
   await goToTalentsConfig(page);
 
   await ss("TC-Settings-03_talents-config-PASSED");
 });
 
-// ─── TC-Settings-04: Reguler Talent Settings → Save ──────────────────────────
+// ─── TC-Settings-04: Reguler Talent Settings → Save ──
 test("TC-Settings-04: Settings → Talents Config → Reguler → Save", async ({ loggedInPage: page, ss }) => {
   await goToTalentsConfig(page);
+  const regulerSection = talentConfigSection(page, "Reguler Talent Settings");
 
-  await page.getByRole("spinbutton", { name: "Call Price" }).fill(REGULER_CALL_PRICE);
+  await regulerSection.getByRole("spinbutton", { name: "Call Price", exact: true }).fill(REGULER_CALL_PRICE);
   await page.waitForTimeout(300);
-  await page.getByRole("spinbutton", { name: "Talent EARN" }).fill(REGULER_TALENT_EARN);
+  await regulerSection.getByRole("spinbutton", { name: "Talent EARN", exact: true }).fill(REGULER_TALENT_EARN);
   await page.waitForTimeout(300);
-  await page.getByRole("spinbutton", { name: "Chat Fee" }).fill(REGULER_CHAT_FEE);
+  await regulerSection.getByRole("spinbutton", { name: "Chat Fee", exact: true }).fill(REGULER_CHAT_FEE);
   await page.waitForTimeout(300);
-  await page.getByRole("spinbutton", { name: "Friend Request Price" }).fill(REGULER_FRIEND_REQUEST_PRICE);
+  await regulerSection.getByRole("spinbutton", { name: "Friend Request Price", exact: true }).fill(REGULER_FRIEND_REQUEST_PRICE);
   await page.waitForTimeout(300);
-  await page.getByRole("spinbutton", { name: "Friend Request Earn" }).fill(REGULER_FRIEND_REQUEST_EARN);
+  await regulerSection.getByRole("spinbutton", { name: "Friend Request Earn", exact: true }).fill(REGULER_FRIEND_REQUEST_EARN);
   await page.waitForTimeout(300);
 
   await ss("TC-Settings-04_reguler-before-save-PASSED");
@@ -148,7 +156,7 @@ test("TC-Settings-04: Settings → Talents Config → Reguler → Save", async (
   await ss("TC-Settings-04_reguler-save-PASSED");
 });
 
-// ─── TC-Settings-05: VIP Talent Settings → Save ───────────────────────────────
+// ─── TC-Settings-05: VIP Talent Settings → Save ───────
 test("TC-Settings-05: Settings → Talents Config → VIP → Save", async ({ loggedInPage: page, ss }) => {
   await goToTalentsConfig(page);
 
@@ -173,7 +181,7 @@ test("TC-Settings-05: Settings → Talents Config → VIP → Save", async ({ lo
   await ss("TC-Settings-05_vip-save-PASSED");
 });
 
-// ─── TC-Settings-06: Celeb Talent Settings → Save ────────────────────────────
+// ─── TC-Settings-06: Celeb Talent Settings → Save ────
 test("TC-Settings-06: Settings → Talents Config → Celeb → Save", async ({ loggedInPage: page, ss }) => {
   await goToTalentsConfig(page);
 
@@ -203,7 +211,7 @@ test("TC-Settings-06: Settings → Talents Config → Celeb → Save", async ({ 
 
 const USER_ROLES_SEARCH_EMAIL = "iki@ultrazbola.com";
 
-// ─── Helper: navigasi ke Settings → User Roles ───────────────────────────────
+// ─── Helper: navigasi ke Settings → User Roles ───────
 async function goToUserRoles(page: any) {
   await expect(page.getByText("Miracall Admin Dashboard")).toBeVisible({ timeout: 15000 });
 
@@ -215,14 +223,14 @@ async function goToUserRoles(page: any) {
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 }
 
-// ─── TC-Settings-07: Buka User Roles ─────────────────────────────────────────
+// ─── TC-Settings-07: Buka User Roles ─────────────────
 test("TC-Settings-07: Settings → User Roles", async ({ loggedInPage: page, ss }) => {
   await goToUserRoles(page);
 
   await ss("TC-Settings-07_user-roles-PASSED");
 });
 
-// ─── TC-Settings-08: User Roles → Search by email ────────────────────────────
+// ─── TC-Settings-08: User Roles → Search by email ────
 test("TC-Settings-08: Settings → User Roles → Search Email", async ({ loggedInPage: page, ss }) => {
   await goToUserRoles(page);
 
@@ -236,7 +244,7 @@ test("TC-Settings-08: Settings → User Roles → Search Email", async ({ logged
 
 const GIFT_SEARCH_NAME = "Tes Pink Car";
 
-// ─── Helper: navigasi ke Settings → Gifts ────────────────────────────────────
+// ─── Helper: navigasi ke Settings → Gifts ────────────
 async function goToGifts(page: any) {
   await expect(page.getByText("Miracall Admin Dashboard")).toBeVisible({ timeout: 15000 });
 
@@ -248,14 +256,14 @@ async function goToGifts(page: any) {
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 }
 
-// ─── TC-Settings-09: Buka Gifts Management ───────────────────────────────────
+// ─── TC-Settings-09: Buka Gifts Management ───────────
 test("TC-Settings-09: Settings → Gifts", async ({ loggedInPage: page, ss }) => {
   await goToGifts(page);
 
   await ss("TC-Settings-09_gifts-PASSED");
 });
 
-// ─── TC-Settings-10: Gifts → Search "Tes Pink Car" ───────────────────────────
+// ─── TC-Settings-10: Gifts → Search "Tes Pink Car" ───
 test("TC-Settings-10: Settings → Gifts → Search", async ({ loggedInPage: page, ss }) => {
   await goToGifts(page);
 
@@ -273,7 +281,7 @@ const PM_CODE     = "BANK JAGO";
 const PM_TYPE     = "E-Wallet";
 const PM_LOGO_URL = "https://static.vecteezy.com/system/resources/thumbnails/067/565/533/small_2x/bank-jago-square-rounded-logo-transparent-without-background-free-png.png";
 
-// ─── Helper: navigasi ke Settings → Payment Methods ──────────────────────────
+// ─── Helper: navigasi ke Settings → Payment Methods ──
 async function goToPaymentMethods(page: any) {
   await expect(page.getByText("Miracall Admin Dashboard")).toBeVisible({ timeout: 15000 });
 
@@ -285,14 +293,14 @@ async function goToPaymentMethods(page: any) {
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 }
 
-// ─── TC-Settings-11: Buka Payment Methods ────────────────────────────────────
+// ─── TC-Settings-11: Buka Payment Methods ────────────
 test("TC-Settings-11: Settings → Payment Methods", async ({ loggedInPage: page, ss }) => {
   await goToPaymentMethods(page);
 
   await ss("TC-Settings-11_payment-methods-PASSED");
 });
 
-// ─── TC-Settings-12: Create Payment Method ───────────────────────────────────
+// ─── TC-Settings-12: Create Payment Method ───────────
 test("TC-Settings-12: Settings → Payment Methods → Create Payment Method", async ({ loggedInPage: page, ss }) => {
   await goToPaymentMethods(page);
 
@@ -356,7 +364,7 @@ test("TC-Settings-13: Settings → Topup Products → All", async ({ loggedInPag
   await ss("TC-Settings-13_topup-all-PASSED");
 });
 
-// ─── TC-Settings-14b: Filter Gems ────────────────────────────────────────────
+// ─── TC-Settings-14b: Filter Gems ────────────────────
 test("TC-Settings-14b: Settings → Topup Products → Gems", async ({ loggedInPage: page, ss }) => {
   await goToTopupProducts(page);
 
@@ -366,7 +374,7 @@ test("TC-Settings-14b: Settings → Topup Products → Gems", async ({ loggedInP
   await ss("TC-Settings-14b_topup-gems-PASSED");
 });
 
-// ─── TC-Settings-15: Filter Beans ────────────────────────────────────────────
+// ─── TC-Settings-15: Filter Beans ────────────────────
 test("TC-Settings-15: Settings → Topup Products → Beans", async ({ loggedInPage: page, ss }) => {
   await goToTopupProducts(page);
 

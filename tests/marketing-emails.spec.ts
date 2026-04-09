@@ -1,6 +1,9 @@
 import { test, expect } from "./fixtures";
 
 const PAGE_VIEW_DELAY = 5000;
+const BROADCAST_TITLE = "talent menunggu kalian";
+const BROADCAST_BODY = "banyak talent2 baru nih menunggu kalian untuk call";
+const BROADCAST_PROMO_ID = "123";
 
 // ─── Helper: login → Marketing → Marketing Email ─────────────────────────────
 async function goToMarketingEmails(page: any) {
@@ -58,4 +61,36 @@ test("TC-Marketing-01: Marketing → Marketing Email → Next Page sampai habis"
 
   // ss halaman terakhir sebagai bukti sudah mentok
   await ss("TC-Marketing-01_02_last-page-PASSED");
+});
+
+// ─── TC-Marketing-02: Marketing → Broadcast → Submit Broadcast ───────────────
+test("TC-Marketing-02: Marketing → Broadcast → Submit Broadcast (Users + Immediate)", async ({ loggedInPage: page, ss }) => {
+  // buka menu Marketing lalu masuk ke halaman Broadcast
+  await page.getByRole("button", { name: "Marketing" }).click();
+  await page.waitForTimeout(1000);
+  await page.getByRole("link", { name: "Broadcast" }).click();
+  await page.waitForLoadState("domcontentloaded");
+
+  await expect(page).toHaveURL(/marketing\/broadcast/, { timeout: 10000 });
+
+  // Target: Users
+  await page.getByText("All", { exact: true }).click();
+  await page.getByRole("option", { name: "Users" }).click();
+
+  // Isi form broadcast
+  await page.getByRole("textbox", { name: "Title" }).fill(BROADCAST_TITLE);
+  await page.getByRole("textbox", { name: "Body" }).fill(BROADCAST_BODY);
+  await page.getByRole("textbox", { name: "Promo ID (optional)" }).fill(BROADCAST_PROMO_ID);
+
+  // Send mode: Immediate
+  await page.getByText("Immediate (send now)").click();
+  await page.getByRole("option", { name: "Immediate (send now)" }).click();
+
+  await ss("TC-Marketing-02_01_broadcast-form-filled");
+
+  // submit broadcast
+  await page.getByRole("button", { name: "Submit Broadcast" }).click();
+  await page.waitForTimeout(PAGE_VIEW_DELAY);
+
+  await ss("TC-Marketing-02_02_submit-broadcast-PASSED");
 });

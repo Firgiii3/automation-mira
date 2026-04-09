@@ -3,10 +3,10 @@ import { test, expect } from "./fixtures";
 const PAGE_VIEW_DELAY = 5000;
 const HOST_SEARCH_EMAIL = "ais+66@ultrazbola.com";
 const HOST_TIER = "VIP";
-const CONFIG_MILESTONE = "20";
-const CONFIG_AMOUNT = "750000";
+const CONFIG_MILESTONE = "40";
+const CONFIG_AMOUNT = "1500000";
 
-// ─── Helper: navigasi ke Referral → Host Settings ────────────────────────────
+//  Helper: navigasi ke Referral → Host Settings ─
 async function goToHostSettings(page: any) {
   await expect(page.getByText("Miracall Admin Dashboard")).toBeVisible({ timeout: 15000 });
 
@@ -24,20 +24,19 @@ async function goToHostSettings(page: any) {
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 }
 
-// ─── Helper: search host by email ────────────────────────────────────────────
+//  Helper: search host by email
 async function searchHost(page: any, keyword: string) {
   await page.getByPlaceholder(/search hosts/i).fill(keyword);
   await page.waitForTimeout(2000);
 }
 
-// ─── TC-ReferralHost-01: Buka Host Settings ──────────────────────────────────
+//  TC-ReferralHost-01: Buka Host Settings ─
 test("TC-ReferralHost-01: Referral → Host Settings", async ({ loggedInPage: page, ss }) => {
   await goToHostSettings(page);
 
   await ss("TC-ReferralHost-01_host-settings-PASSED");
 });
 
-// ─── TC-ReferralHost-02: Search email ais+66@ultrazbola.com ──────────────────
 test("TC-ReferralHost-02: Referral → Host Settings → Search Email", async ({ loggedInPage: page, ss }) => {
   await goToHostSettings(page);
   await searchHost(page, HOST_SEARCH_EMAIL);
@@ -46,7 +45,7 @@ test("TC-ReferralHost-02: Referral → Host Settings → Search Email", async ({
   await ss("TC-ReferralHost-02_search-email-PASSED");
 });
 
-// ─── TC-ReferralHost-03: Edit Settings → Enable Referral → Tier VIP → Save ───
+//  TC-ReferralHost-03: Edit Settings → Enable Referral → Tier VIP → Save 
 test("TC-ReferralHost-03: Referral → Host Settings → Edit Settings → Enable → VIP → Save", async ({ loggedInPage: page, ss }) => {
   await goToHostSettings(page);
   await searchHost(page, HOST_SEARCH_EMAIL);
@@ -71,16 +70,14 @@ test("TC-ReferralHost-03: Referral → Host Settings → Edit Settings → Enabl
   await page.getByRole("option", { name: HOST_TIER }).click();
   await page.waitForTimeout(500);
 
-  await ss("TC-ReferralHost-03_before-save-PASSED");
-
   // klik Save Changes
   await page.getByRole("button", { name: "Save Changes" }).click();
   await page.waitForTimeout(2000);
 
-  await ss("TC-ReferralHost-03_save-changes-PASSED");
+  await ss("TC-ReferralHost-03_enable-vip-save-PASSED");
 });
 
-// ─── TC-ReferralHost-04: Search → Show Details ───────────────────────────────
+//  TC-ReferralHost-04: Search → Show Details ─
 test("TC-ReferralHost-04: Referral → Host Settings → Search → Show Details", async ({ loggedInPage: page, ss }) => {
   await goToHostSettings(page);
   await searchHost(page, HOST_SEARCH_EMAIL);
@@ -100,8 +97,8 @@ test("TC-ReferralHost-04: Referral → Host Settings → Search → Show Details
   await ss("TC-ReferralHost-04_show-details-PASSED");
 });
 
-// ─── TC-ReferralHost-05: 
-test("TC-ReferralHost-05: Referral → Host Settings → Show Dashboard → Referral Tab", async ({ loggedInPage: page, ss }) => {
+//  TC-ReferralHost-05: Search → Show Dashboard
+test("TC-ReferralHost-05: Referral → Host Settings → Search → Show Dashboard", async ({ loggedInPage: page, ss }) => {
   await goToHostSettings(page);
   await searchHost(page, HOST_SEARCH_EMAIL);
 
@@ -117,7 +114,20 @@ test("TC-ReferralHost-05: Referral → Host Settings → Show Dashboard → Refe
   await expect(page).toHaveURL(/referral\/host-settings\/\d+$/, { timeout: 10000 });
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 
-  await ss("TC-ReferralHost-05_dashboard-PASSED");
+  await ss("TC-ReferralHost-05_show-dashboard-PASSED");
+});
+
+//  TC-ReferralHost-06: Show Dashboard → Referral Tab
+test("TC-ReferralHost-06: Referral → Host Settings → Show Dashboard → Referral Tab", async ({ loggedInPage: page, ss }) => {
+  await goToHostSettings(page);
+  await searchHost(page, HOST_SEARCH_EMAIL);
+
+  // masuk dulu ke dashboard host
+  await page.locator("table tbody tr").first().getByLabel("actions").click();
+  await page.waitForTimeout(500);
+  await page.getByText("Show Dashboard").click();
+  await page.waitForLoadState("domcontentloaded");
+  await expect(page).toHaveURL(/referral\/host-settings\/\d+$/, { timeout: 10000 });
 
   // klik tab Referral
   await page.getByRole("tab", { name: "Referral" }).click();
@@ -126,14 +136,14 @@ test("TC-ReferralHost-05: Referral → Host Settings → Show Dashboard → Refe
   await expect(page).toHaveURL(/referral\/host-settings\/\d+\/referral/, { timeout: 10000 });
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 
-  await ss("TC-ReferralHost-05_referral-tab-PASSED");
+  await ss("TC-ReferralHost-06_referral-tab-PASSED");
 });
 
 
 // REFERRAL CONFIGS 
 
 
-// ─── Helper: navigasi ke Referral → Referral Configs ─────────────────────────
+//  Helper: navigasi ke Referral → Referral Configs ─
 async function goToReferralConfigs(page: any) {
   await expect(page.getByText("Miracall Admin Dashboard")).toBeVisible({ timeout: 15000 });
 
@@ -147,14 +157,14 @@ async function goToReferralConfigs(page: any) {
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 }
 
-// ─── TC-ReferralConfigs-01: Buka Referral Configs ────────────────────────────
+//  TC-ReferralConfigs-01: Buka Referral Configs ─
 test("TC-ReferralConfigs-01: Referral → Referral Configs", async ({ loggedInPage: page, ss }) => {
   await goToReferralConfigs(page);
 
   await ss("TC-ReferralConfigs-01_referral-configs-PASSED");
 });
 
-// ─── TC-ReferralConfigs-02: Create Config Talent (Milestone: 20, Amount: 750000) ─
+//  TC-ReferralConfigs-02: Create Config Talent (Milestone: 20, Amount: 750000) ─
 test("TC-ReferralConfigs-02: Referral → Referral Configs → Create Config Talent", async ({ loggedInPage: page, ss }) => {
   await goToReferralConfigs(page);
 
@@ -193,7 +203,7 @@ async function goToNonAgency(page: any) {
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 }
 
-// ─── Helper: set Type filter ──────────────────────────────────────────────────
+//  Helper: set Type filter
 async function setNonAgencyType(page: any, currentLabel: string, type: string) {
   await page.getByText(currentLabel, { exact: true }).click();
   await page.getByRole("option", { name: type, exact: true }).click();
@@ -201,14 +211,14 @@ async function setNonAgencyType(page: any, currentLabel: string, type: string) {
   await page.waitForTimeout(1000);
 }
 
-// ─── TC-NonAgency-01: Default (Type = All) ───────────────────────────────────
+//  TC-NonAgency-01: Default (Type = All)
 test("TC-NonAgency-01: Referral → Non-Agency → Default (All)", async ({ loggedInPage: page, ss }) => {
   await goToNonAgency(page);
 
   await ss("TC-NonAgency-01_default-all-PASSED");
 });
 
-// ─── TC-NonAgency-02: Type = Active ──────────────────────────────────────────
+//  TC-NonAgency-02: Type = Active 
 test("TC-NonAgency-02: Referral → Non-Agency → Active", async ({ loggedInPage: page, ss }) => {
   await goToNonAgency(page);
   await setNonAgencyType(page, "All", "Active");
@@ -217,7 +227,7 @@ test("TC-NonAgency-02: Referral → Non-Agency → Active", async ({ loggedInPag
   await ss("TC-NonAgency-02_active-PASSED");
 });
 
-// ─── TC-NonAgency-03: Type = Inactive ────────────────────────────────────────
+//  TC-NonAgency-03: Type = Inactive ─
 test("TC-NonAgency-03: Referral → Non-Agency → Inactive", async ({ loggedInPage: page, ss }) => {
   await goToNonAgency(page);
   await setNonAgencyType(page, "All", "Inactive");
@@ -226,7 +236,7 @@ test("TC-NonAgency-03: Referral → Non-Agency → Inactive", async ({ loggedInP
   await ss("TC-NonAgency-03_inactive-PASSED");
 });
 
-// ─── TC-NonAgency-04: Semua Type berurutan ───────────────────────────────────
+//  TC-NonAgency-04: Semua Type berurutan
 test("TC-NonAgency-04: Referral → Non-Agency → Semua Type", async ({ loggedInPage: page, ss }) => {
   await goToNonAgency(page);
 

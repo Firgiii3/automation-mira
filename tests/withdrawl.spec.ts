@@ -7,12 +7,12 @@ const REJECTION_REASON = "terlalu banyak";
 async function goToWithdrawals(page: any) {
   await expect(page.getByText("Miracall Admin Dashboard")).toBeVisible({ timeout: 15000 });
 
-  // klik Admin (toggle accordion)
-  await page.getByRole("link", { name: "Admin" }).click();
+  // samakan pola global locator seperti admin-content-approval
+  await page.getByRole("button", { name: "Admin" }).click();
   await page.waitForTimeout(1500);
 
-  // navigate ke withdrawals
-  await page.goto("/withdrawals");
+  // klik submenu Withdrawals
+  await page.getByRole("link", { name: "Withdrawals" }).click();
   await page.waitForLoadState("domcontentloaded");
 
   // verifikasi halaman withdrawals
@@ -79,7 +79,7 @@ test("TC-Withdrawal-04: Admin → Withdrawals → Semua Filter Status", async ({
   await ss("TC-Withdrawal-04_semua-filter-PASSED");
 });
 
-// ─── TC-Withdrawal-05: Pending → Approve ─────────────────────────────────────
+
 test("TC-Withdrawal-05: Admin → Withdrawals → Pending → Approve", async ({ loggedInPage: page, ss }) => {
   await goToWithdrawals(page);
 
@@ -98,8 +98,9 @@ test("TC-Withdrawal-05: Admin → Withdrawals → Pending → Approve", async ({
     { timeout: 15000 }
   ).catch(() => null);
 
-  // klik approve pada baris pertama
-  await page.getByRole("row").filter({ hasText: "" }).first().getByLabel("Approve").click();
+  // klik approve dengan pola global codegen: row + label action
+  const approveRow = page.getByRole("row").filter({ has: page.getByLabel("Approve") }).first();
+  await approveRow.getByLabel("Approve").click();
 
   // verifikasi modal konfirmasi muncul
   await expect(page.getByRole("dialog")).toBeVisible({ timeout: 10000 });
@@ -125,7 +126,7 @@ test("TC-Withdrawal-05: Admin → Withdrawals → Pending → Approve", async ({
   await expect(page.getByRole("dialog")).not.toBeVisible({ timeout: 15000 });
   await page.waitForTimeout(PAGE_VIEW_DELAY);
 
-  // ss terakhir sebagai bukti approve berhasil
+
   await ss("TC-Withdrawal-05_03_approve-PASSED");
 });
 
@@ -142,8 +143,9 @@ test("TC-Withdrawal-06: Admin → Withdrawals → Pending → Reject", async ({ 
   // ss halaman pending sebelum reject
   await ss("TC-Withdrawal-06_01_list-pending");
 
-  // klik reject pada baris pertama
-  await page.getByRole("row").filter({ hasText: "" }).first().getByLabel("Reject").click();
+  // klik reject dengan pola global codegen: row + label action
+  const rejectRow = page.getByRole("row").filter({ has: page.getByLabel("Reject") }).first();
+  await rejectRow.getByLabel("Reject").click();
 
   // verifikasi modal reject muncul
   await expect(page.getByRole("dialog")).toBeVisible({ timeout: 10000 });
