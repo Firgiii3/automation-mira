@@ -1,6 +1,5 @@
 import type { Page } from "@playwright/test";
 
-/** Sama dengan pola di `loggedInPage` fixture — input pertama + password + submit */
 export function loginFormLocators(page: Page) {
   return {
     emailInput: page.locator("input").nth(0),

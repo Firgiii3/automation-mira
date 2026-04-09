@@ -1,4 +1,4 @@
-import { test, expect } from "./fixtures";
+import { test, expect } from "../fixtures";
 
 const PAGE_VIEW_DELAY = 5000;
 const REJECTION_REASON = "terlalu banyak";
@@ -24,8 +24,20 @@ async function goToWithdrawals(page: any) {
 
 // ─── Helper: filter status ────────────────────────────────────────────────────
 async function filterByStatus(page: any, status: string) {
-  await page.getByRole("combobox", { name: /Status/i }).click();
-  await page.getByRole("option", { name: status }).click();
+  const namedStatus = page.getByRole("combobox", { name: /Status/i });
+  if (await namedStatus.count()) {
+    await namedStatus.first().click();
+  } else {
+    // fallback UI: combobox tidak selalu punya accessible name "Status"
+    await page.getByRole("combobox").first().click();
+  }
+
+  const exactOption = page.getByRole("option", { name: status, exact: true });
+  if (await exactOption.count()) {
+    await exactOption.first().click();
+  } else {
+    await page.getByRole("option", { name: new RegExp(status, "i") }).first().click();
+  }
   await page.waitForLoadState("domcontentloaded");
   await page.waitForTimeout(1500);
 }

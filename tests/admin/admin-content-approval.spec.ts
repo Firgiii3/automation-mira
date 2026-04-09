@@ -1,10 +1,10 @@
-import { test, expect } from "./fixtures";
+import { test, expect } from "../fixtures";
 
 const PAGE_VIEW_DELAY = 3000;
 const REJECTION_REASON = "content negatif";
-const CONTENT_SEARCH_NAME = "kiki delapan enam";
+const CONTENT_SEARCH_NAME = "kiki delapan empat";
 
-// ─── Helper: navigasi ke Admin → Content Approval ────────────────────────────
+// Helper: navigasi ke Admin → Content Approval 
 async function goToContentApproval(page: any) {
   await expect(page.getByText("Miracall Admin Dashboard")).toBeVisible({ timeout: 15000 });
 
@@ -60,7 +60,7 @@ test("TC-Admin-02: Admin → Content Approval → Pending → Approve", async ({
   await ss("TC-Admin-02_approve-PASSED");
 });
 
-// ─── TC-Admin-03: Content Approval → Pending → Reject ────────────────────────
+// TC-Admin-03: Content Approval → Pending → Reject ────────────────────────
 test("TC-Admin-03: Admin → Content Approval → Pending → Reject", async ({ loggedInPage: page, ss }) => {
   await goToContentApproval(page);
 
